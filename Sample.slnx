@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="compose.yaml" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Project Path="src/Sample.Core/Sample.Core.csproj" />
+  <Project Path="src/Sample.Infrastructure/Sample.Infrastructure.csproj" />
+  <Project Path="src/Sample.WebApi/Sample.WebApi.csproj" />
+</Solution>

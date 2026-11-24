@@ -1,0 +1,9 @@
+﻿services:
+  sample.webapi:
+    image: sample.webapi
+    build:
+      context: .
+      dockerfile: src/Sample.WebApi/Dockerfile
+    ports:
+      - "8080:8080"
+
