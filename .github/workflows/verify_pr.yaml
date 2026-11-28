@@ -20,5 +20,4 @@ jobs:
         
       - name: Build
         run: dotnet build --no-restore \
-          --configuration Release \
-          /p:ErrorLog=analysis_result.sarif
+          --configuration Release
