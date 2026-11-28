@@ -4,6 +4,8 @@
     build:
       context: .
       dockerfile: src/Sample.WebApi/Dockerfile
+      args:
+        ENVIRONMENT: "Production"
     ports:
       - "8080:8080"
 
