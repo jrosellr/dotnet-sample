@@ -33,6 +33,7 @@ jobs:
   test:
     name: Run tests
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Load build artifact
         uses: actions/download-artifact@v8
