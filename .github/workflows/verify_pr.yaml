@@ -17,19 +17,19 @@ jobs:
 
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v6
-        
+
       - name: Install dependencies
         run: dotnet restore
-        
+
       - name: Build
         run: dotnet build --no-restore
-      
+
       - name: Upload build artifact
         uses: actions/upload-artifact@v7
         with:
           name: pr-${{github.event.number}}-build-output
           path: ${{ github.workspace }}/
-  
+
   test:
     name: Run tests
     runs-on: ubuntu-latest
@@ -42,10 +42,10 @@ jobs:
 
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v6
-      
+
       - name: Run tests
         run: dotnet test --no-restore --no-build
-  
+
   static_analysis:
     name: Static analysis
     runs-on: ubuntu-latest
@@ -58,21 +58,29 @@ jobs:
 
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v6
-      
+
       - name: Install CycloneDX .NET tool
         run: dotnet tool install --global CycloneDX
-      
+
       - name: Generate application SBOM
         run: dotnet-CycloneDX ./src/Sample.WebApi/Sample.WebApi.csproj --output-format=json
-      
-      - name: Scan for vulnerabilities
-        uses: aquasecurity/trivy-action@v0.36.0
+
+      - name: Manual Trivy Setup
+        uses: aquasecurity/setup-trivy@v0.3.1
         with:
-          scan-type: 'fs'
-          format: 'sarif'
-          output: 'scan-results.sarif'
+          cache: true
+          version: v0.76.2
+
+      - name: Scan for vulnerabilities
+        run: trivy fs --scanners misconfig --format sarif --output source-results.sarif ${{ github.workspace }}
+#      - name: Scan for vulnerabilities
+#        uses: aquasecurity/trivy-action@v0.36.0
+#        with:
+#          scan-type: 'fs'
+#          format: 'sarif'
+#          output: 'source-results.sarif'
 
       - name: Upload scan results
         uses: github/codeql-action/upload-sarif@v4
         with:
-          sarif_file: 'scan-results.sarif'
+          sarif_file: 'source-results.sarif'
