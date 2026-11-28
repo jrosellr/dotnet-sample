@@ -5,6 +5,7 @@
     <File Path="compose.yaml" />
     <File Path="Directory.Build.props" />
     <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
   </Folder>
   <Project Path="src/Sample.Core/Sample.Core.csproj" />
   <Project Path="src/Sample.Infrastructure/Sample.Infrastructure.csproj" />

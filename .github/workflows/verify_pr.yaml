@@ -1,0 +1,86 @@
+﻿name: Verify Pull Request
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v6
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: pr-${{github.event.number}}-build-output
+          path: ${{ github.workspace }}/
+
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Load build artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: pr-${{github.event.number}}-build-output
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v6
+
+      - name: Run tests
+        run: dotnet test --no-restore --no-build
+
+  static_analysis:
+    name: Static analysis
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Load build artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: pr-${{github.event.number}}-build-output
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v6
+
+      - name: Install CycloneDX .NET tool
+        run: dotnet tool install --global CycloneDX
+
+      - name: Generate application SBOM
+        run: dotnet-CycloneDX ./src/Sample.WebApi/Sample.WebApi.csproj --output-format=json
+
+      - name: Manual Trivy Setup
+        uses: aquasecurity/setup-trivy@v0.3.1
+        with:
+          cache: true
+          version: v0.76.2
+
+      - name: Scan for vulnerabilities
+        run: trivy fs --scanners misconfig --format sarif --output source-results.sarif ${{ github.workspace }}
+#      - name: Scan for vulnerabilities
+#        uses: aquasecurity/trivy-action@v0.36.0
+#        with:
+#          scan-type: 'fs'
+#          format: 'sarif'
+#          output: 'source-results.sarif'
+
+      - name: Upload scan results
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: 'source-results.sarif'
