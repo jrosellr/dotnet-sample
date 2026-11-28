@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   build:
     name: Build
@@ -20,3 +23,24 @@ jobs:
         
       - name: Build
         run: dotnet build --no-restore
+      
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: pr-${{github.event.number}}-build-output
+          path: ${{ github.workspace }}/
+  
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Load build artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: pr-${{github.event.number}}-build-output
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v6
+      
+      - name: Run tests
+        run: dotnet test --no-restore --no-build
