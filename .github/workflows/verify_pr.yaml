@@ -59,9 +59,13 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v6
       
+      - name: Install CycloneDX .NET tool
+        run: dotnet tool install --global CycloneDX
+      
       - name: Generate application SBOM
-        run: docker run --rm --user "$(id -u)":"$(id -g)" --volume=${{ github.workspace }}:/workspace \
-          cyclonedx/cyclonedx-dotnet --recursive --output /workspace/ --output-format json /workspace/src/Sample.WebApi.csproj
+        run: dotnet-CycloneDX ./src/Sample.WebApi/Sample.WebApi.csproj \
+          --recursive \
+          --output-format json
       
       - name: Scan for vulnerabilities
         uses: aquasecurity/trivy-action@v0.36.0
