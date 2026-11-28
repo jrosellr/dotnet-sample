@@ -60,7 +60,7 @@ jobs:
         uses: actions/setup-dotnet@v6
       
       - name: Generate application SBOM
-        run: docker run --rm --user "$(id -u)":"$(id -g)" --volume "$(pwd)":/workspace \
+        run: docker run --rm --volume ${{ github.workspace }}:/workspace \
           cyclonedx/cyclonedx-dotnet --recursive --output /workspace/ --output-format json /workspace/src/Sample.WebApi.csproj
       
       - name: Scan for vulnerabilities
