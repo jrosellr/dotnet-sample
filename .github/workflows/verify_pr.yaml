@@ -63,9 +63,7 @@ jobs:
         run: dotnet tool install --global CycloneDX
       
       - name: Generate application SBOM
-        run: dotnet-CycloneDX ./src/Sample.WebApi/Sample.WebApi.csproj \
-          --recursive \
-          --output-format json
+        run: dotnet-CycloneDX ./src/Sample.WebApi/Sample.WebApi.csproj --output-format=json
       
       - name: Scan for vulnerabilities
         uses: aquasecurity/trivy-action@v0.36.0

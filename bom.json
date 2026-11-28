@@ -1,0 +1,131 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.7",
+  "serialNumber": "urn:uuid:644c4c13-39c7-41ff-bec2-78cd419f0328",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-11-28T16:15:43Z",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "authors": [
+            {
+              "name": "CycloneDX"
+            }
+          ],
+          "name": "CycloneDX module for .NET",
+          "version": "6.3.2.0",
+          "externalReferences": [
+            {
+              "url": "https://github.com/CycloneDX/cyclonedx-dotnet",
+              "type": "website"
+            }
+          ]
+        }
+      ]
+    },
+    "component": {
+      "type": "application",
+      "bom-ref": "Sample.WebApi@0.0.0",
+      "name": "Sample.WebApi",
+      "version": "0.0.0"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:nuget/Microsoft.AspNetCore.OpenApi@11.0.0",
+      "authors": [
+        {
+          "name": "Microsoft"
+        }
+      ],
+      "name": "Microsoft.AspNetCore.OpenApi",
+      "version": "11.0.0",
+      "description": "Provides APIs for annotating route handler endpoints in ASP.NET Core with OpenAPI annotations.\n\nThis package was built from the source code at https://github.com/dotnet/dotnet/tree/297acf930fb0f5c07fd4e51d78e521b4ad2e5d1f",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "11768A2DC8CF1EA94B728C29005F864E1042D649ACD9D2AFD3354BFE6C7F8384B91EB3CB19D4596DC8B43C6587F945704C69A1532D1294B156BE645999672923"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+      "purl": "pkg:nuget/Microsoft.AspNetCore.OpenApi@11.0.0",
+      "externalReferences": [
+        {
+          "url": "https://asp.net/",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/dotnet/dotnet",
+          "type": "vcs"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:nuget/Microsoft.OpenApi@3.11.0",
+      "authors": [
+        {
+          "name": "Microsoft"
+        }
+      ],
+      "name": "Microsoft.OpenApi",
+      "version": "3.11.0",
+      "description": ".NET models with JSON and YAML writers for OpenAPI specification",
+      "scope": "required",
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "00E5293F79F15E1573FC0FBBD90BEF825E371024E18A8219A77B73390DC9B467498D28BD48CFC6B67A8735DB680086CE1BBCF71C50E6FA9AABEE8F376F20496D"
+        }
+      ],
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "copyright": "\u00A9 Microsoft Corporation. All rights reserved.",
+      "purl": "pkg:nuget/Microsoft.OpenApi@3.11.0",
+      "externalReferences": [
+        {
+          "url": "https://github.com/Microsoft/OpenAPI.NET",
+          "type": "website"
+        },
+        {
+          "url": "https://github.com/Microsoft/OpenAPI.NET",
+          "type": "vcs"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "pkg:nuget/Microsoft.AspNetCore.OpenApi@11.0.0",
+      "dependsOn": [
+        "pkg:nuget/Microsoft.OpenApi@3.11.0"
+      ]
+    },
+    {
+      "ref": "pkg:nuget/Microsoft.OpenApi@3.11.0",
+      "dependsOn": []
+    },
+    {
+      "ref": "Sample.WebApi@0.0.0",
+      "dependsOn": [
+        "pkg:nuget/Microsoft.AspNetCore.OpenApi@11.0.0"
+      ]
+    }
+  ]
+}

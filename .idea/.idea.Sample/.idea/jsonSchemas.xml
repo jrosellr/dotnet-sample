@@ -3,6 +3,22 @@
   <component name="JsonSchemaMappingsProjectConfiguration">
     <state>
       <map>
+        <entry key="CycloneDX">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="CycloneDX" />
+              <option name="relativePathToSchema" value="https://raw.githubusercontent.com/CycloneDX/specification/refs/heads/master/schema/bom-1.6.schema.json" />
+              <option name="applicationDefined" value="true" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="bom.json" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
         <entry key="appsettings.json">
           <value>
             <SchemaInfo>
